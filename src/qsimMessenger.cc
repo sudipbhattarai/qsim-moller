@@ -90,6 +90,14 @@ qsimMessenger::qsimMessenger(){
     fthetaMaxCmd->SetGuidance("Set theta range maximum");
     fthetaMaxCmd->SetParameterName("thetamax", false);
 
+	fphiMinCmd = new G4UIcmdWithADoubleAndUnit("/qsim/phimin", this);
+    fphiMinCmd->SetGuidance("Set phi range minimum");
+    fphiMinCmd->SetParameterName("phimin", false);
+
+    fphiMaxCmd = new G4UIcmdWithADoubleAndUnit("/qsim/phimax", this);
+    fphiMaxCmd->SetGuidance("Set phi range maximum");
+    fphiMaxCmd->SetParameterName("phimax", false);
+
 	//fThetaCmd = new G4UIcmdWithADoubleAndUnit("/qsim/theta", this);
 	//fThetaCmd->SetGuidance("Set particle theta");
 	//fThetaCmd->SetParameterName("theta", false);

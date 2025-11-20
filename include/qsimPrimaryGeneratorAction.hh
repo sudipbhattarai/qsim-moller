@@ -38,6 +38,7 @@ class qsimPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction {
         G4double fZ; // unused
         G4double fEmin, fEmax;
 		G4double fthetaMin, fthetaMax;
+		G4double fphiMin, fphiMax;
         G4double xPos, yPos, zPos;  // Positions of the event particle generated
         G4double p, pX, pY, pZ;  // Momentum of the event
         G4double E;           // Energy of the event
