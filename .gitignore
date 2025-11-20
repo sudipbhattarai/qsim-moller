@@ -6,6 +6,7 @@ plots/
 test/
 .DS_Store
 output/*
+.cache/
 
 #Files
 ./*.root
