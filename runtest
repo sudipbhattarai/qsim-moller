@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+DEFAULT_GDML_FILE="geometry/shower-max/showerMaxDetector_v3-1-2.gdml"
+DEFAULT_MAC_FILE="macros/runexample.mac"
+
+if [[ "$1" == "-h" ]]; then
+    echo "Usage: runtest [options]"
+    echo "Options:"
+    echo "  -g    Run graphics with the default GDML file."
+    echo "  -h    Display this help message."
+    echo "If no options are provided, the script runs with both the default GDML and MAC files."
+    exit 0
+elif [[ "$1" == "-g" ]]; then
+    ./build/qsim $DEFAULT_GDML_FILE
+else
+    ./build/qsim $DEFAULT_GDML_FILE $DEFAULT_MAC_FILE
+fi
+
