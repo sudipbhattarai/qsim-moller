@@ -1,29 +1,23 @@
-
 # Setup the project
 #
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
 project(QSIM-MOLLER)
 
 
 #ROOT path
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+# set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
+include(${ROOT_USE_FILE})
 
 # this is to ensure we find the header we need
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
-
-#ROOT_GENERATE_DICTIONARY(
-#    qsimDict                         # path to dictionary to generate
-#    LINKDEF "include/qsimLinkDef.h"  # ROOT linkDef file
-#)
-
+# include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
 # You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
 # to build a batch mode only executable
 #
-option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
+# option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
 if(WITH_GEANT4_UIVIS)
   find_package(Geant4 REQUIRED ui_all vis_all)
 else()
@@ -36,14 +30,16 @@ endif()
 #
 include(${Geant4_USE_FILE})
 
-
+#----------------------------------------------------------------------------
 #debugging symbols, complains
-#set(CMAKE_CXX_FLAGS "-g -Wall")
+#
+# set(CMAKE_CXX_FLAGS "-g -Wall") # add -w to suppress warnings
 
 #----------------------------------------------------------------------------
-# Generate dictionaries as well (so we can write objects to ROOT files
-
-include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include ${PROJECT_SOURCE_DIR}/src/)
+# Generate dictionaries as well (so we can write objects to ROOT files)
+#
+include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include ${PROJECT_SOURCE_DIR}/src)
+# include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${PROJECT_SOURCE_DIR}/src)
 
 
 #----------------------------------------------------------------------------
@@ -57,7 +53,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 # Add the executable, and link it to the Geant4 libraries
 #
 #add_executable(qsim qsim.cc ${sources} ${headers} qsimDict.cxx)
-add_executable(qsim qsim.cc ${sources} ${headers})
+add_executable(qsim qsim.cc ${sources})
 target_link_libraries(qsim ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
 
 #----------------------------------------------------------------------------
@@ -65,11 +61,8 @@ target_link_libraries(qsim ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
 # build qsim. This is so that we can run the executable directly because it
 # relies on these scripts being in the current working directory.
 #
-
-#FILE( GLOB QSIM_GEO "geometry/*" )
-
+FILE( GLOB QSIM_GEO "geometry/*" )
 set(QSIM_SCRIPTS
-    geometry/showermaxQsim.gdml
     macros/vis.mac
     vis/OIX.mac
     vis/Qt.mac
@@ -77,7 +70,6 @@ set(QSIM_SCRIPTS
     vis/X.mac
     macros/runexample.mac
     macros/gui.mac
-    macros/vis.mac
 )
 
 foreach(_script ${QSIM_SCRIPTS})
@@ -92,11 +84,11 @@ endforeach()
 # For internal Geant4 use - but has no effect if you build this
 # example standalone
 #
-add_custom_target(QSIM DEPENDS qsim-moller)
+add_custom_target(QSIM-MOLLER DEPENDS qsim)
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS qsim DESTINATION bin)
+# install(TARGETS qsim DESTINATION bin)
 
 

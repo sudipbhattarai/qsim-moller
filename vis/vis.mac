@@ -6,7 +6,7 @@
 /vis/scene/create
 
 # Create a scene handler for a specific graphics system
-/vis/open OGL
+/vis/open
 
 #
 # Declare that the world volume should be added to the scene
@@ -20,8 +20,7 @@
 
 # Add axis (has to be after /vis/scene/create )
 #
-/vis/scene/add/axes 0 0 0 10 cm
-
+/vis/scene/add/axes 0 0 0 20 cm
 
 #
 # Draw a picture that has just the detector (no trajectories or hits).
@@ -38,17 +37,19 @@
 # Set camera
 #
 /vis/viewer/reset
-/vis/viewer/set/viewpointThetaPhi 90 90.0000001 deg
+/vis/viewer/set/viewpointThetaPhi 90 90 deg
+/vis/viewer/set/upVector 1 0 0
 /vis/viewer/zoom 1.0
 
 #
 # Set surface
 #
 /vis/viewer/set/style wireframe
-/vis/viewer/set/background 0.4 0.4 0.4 0.5
+/vis/viewer/set/background 0.7 0.7 0.7 1.0
 
 #/vis/viewer/addCutawayPlane 0.0 0.0 0.0 m 1.0 0.0 0.0
 /vis/viewer/set/lightsMove with-camera
+/vis/viewer/set/rotationStyle freeRotation
 #
 # Create style
 #
