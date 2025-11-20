@@ -21,9 +21,9 @@ Tested and ran on Ubuntu 22 inside UTM in macOS 12
 
 **Requirements:**
 
-* Geant4 >= 4.10
-* cmake > 2.6
-* root
+* Geant4 >= 11.3.1 (11.2 give GDML schema warning in ifarm)
+* cmake > 3.21 (tested with cmake 4.1 in macos, xcode 26.1)
+* root >= 6.32 (tested with root 6.36 in macos, xcode 26.1)
 
 ### Download the qsim-moller
 
@@ -53,7 +53,7 @@ Or, run the shell script [compile](./compile) in the qsim directory.
 ### Running simulation
 
 Simulation can be run in two different modes: Batch mode and visualization mode.
-
+If your GDML file includes linked files with relative paths, either convert all paths to absolute paths or run `qsim-moller` from the directory where those paths are valid relative to your current location.
 **Batch mode:**
 
 To run in batch mode, execute with a macro such as:
@@ -127,6 +127,17 @@ The z-position of the primary vertex, from which particles are emitted toward th
 
 The gdml file defines and describes the geometry of the detector system in the sturctured way to represent the shapes, positions, and materials of detector components in a simulation environment. Here is the link to [GDML user guide](https://gdml.web.cern.ch/GDML/doc/GDMLmanual.pdf) developed by CERN.  
 *For shower-max:* The gdml for shower-max is created using the [python wrapper](https://github.com/sudipbhattarai/remoll-showermax-generator). The properties of different volumes are used from [martices file](./geometry/mainDetMatrices.xml). Here are the list of the material and optical properties used in the gdml:  
+
+**Sensitive detector:** 
+Qsim can only have one sensitive detector, i.e. the photo cathode of the PMT. In order to make it sensitive we need to specify the auxiliary properties (`auxtype`) to the PMT cathode `logical volume` as shown below:
+
+```xml
+	<volume name="logic_pmt_cathode_0">
+		<materialref ref="Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="SensDet" auxvalue="PhotoCathode" />
+	</volume>
+```
 
 **Quartz:**
 * Index of refraction: Speciication sheet for Heraeus Spectrosil 2000 provides >25 data points for n(E). Fit with polynomial.
