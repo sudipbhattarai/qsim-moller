@@ -33,8 +33,8 @@
 		<position name="pos_subtract_wrap_12" x="0.076" y="0" z="0"/>
 		<rotation name="rot_subtract_wrap_12" x="0" y="0" z="0"/>
 	</subtraction>
-	<box name="solid_suitcase_tungstenquartz_1" lunit="mm" x="161.0" y="266.0" z="58.407999999999994"/>
-	<box name="solid_suitcase_tungstenquartz_2" lunit="mm" x="161.0" y="265.0" z="57.407999999999994"/>
+	<box name="solid_suitcase_tungstenquartz_1" lunit="mm" x="161.0" y="266.5" z="58.407999999999994"/>
+	<box name="solid_suitcase_tungstenquartz_2" lunit="mm" x="161.0" y="266.0" z="57.407999999999994"/>
 	<subtraction name="solid_suitcase_tungstenquartz">
 		<first ref="solid_suitcase_tungstenquartz_1"/>
 		<second ref="solid_suitcase_tungstenquartz_2"/>
@@ -177,22 +177,22 @@
 	<volume name="logic_wrap_0_0">
 		<materialref ref="Aluminum_material"/>
 		<solidref ref="solid_wrap"/>
-		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="Color" auxvalue="cyan"/>
 	</volume>
 	<volume name="logic_wrap_0_1">
 		<materialref ref="Aluminum_material"/>
 		<solidref ref="solid_wrap"/>
-		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="Color" auxvalue="cyan"/>
 	</volume>
 	<volume name="logic_wrap_0_2">
 		<materialref ref="Aluminum_material"/>
 		<solidref ref="solid_wrap"/>
-		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="Color" auxvalue="cyan"/>
 	</volume>
 	<volume name="logic_wrap_0_3">
 		<materialref ref="Aluminum_material"/>
 		<solidref ref="solid_wrap"/>
-		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="Color" auxvalue="cyan"/>
 	</volume>
 	<volume name="logic_suitcase_tungstenquartz_0">
 		<materialref ref="Aluminum_material"/>
@@ -202,12 +202,12 @@
 	<volume name="logic_front_back_plate_0">
 		<materialref ref="Aluminum_material"/>
 		<solidref ref="solid_front_back_plate"/>
-		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_front_plate_0">
 		<materialref ref="Aluminum_material"/>
 		<solidref ref="solid_front_plate"/>
-		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_ledge_left_0">
 		<materialref ref="Nylon"/>

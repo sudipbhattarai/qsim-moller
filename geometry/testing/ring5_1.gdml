@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+	<!ENTITY matrices SYSTEM "mainDetMatrices.xml">
+]>
+
+<gdml
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<materials>
+    <define>
+        <quantity type="density" name="universe_mean_density" value="1.e-25" unit="g/cm3" />
+    </define>
+    <element Z="8" formula="O" name="Oxygen" >
+        <atom value="16" />
+    </element>
+    <element Z="7" formula="N" name="Nitrogen" >
+        <atom value="14.01" />
+    </element>
+    <material formula="noFormula" name="Air" >
+        <D value="0.00129" />
+        <fraction n="0.3" ref="Oxygen" />
+        <fraction n="0.7" ref="Nitrogen" />
+    </material>
+</materials>
+
+<solids>
+    <box name="solid_singledet" lunit="mm" x="850" y="300" z="200"/>
+    <box name="solid_ring5Mother" lunit="mm" x="900" y="350" z="250"/>
+</solids>
+
+<structure>
+	<volume name="logic_singledet_00">
+		<materialref ref="Air"/>
+		<solidref ref="solid_singledet"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="ring5Mother">
+		<materialref ref="Air"/>
+		<solidref ref="solid_ring5Mother"/>
+		<physvol name="singledet_00">
+			<volumeref ref="logic_singledet_00"/>
+			<position name="pos_singledet_0" x="0" y="0" z="0"/>
+			<rotation name="rot_singledet_0" x="3.141592653589793" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+</structure>
+<setup name="ring5World" version="1.0">
+	<world ref="ring5Mother"/>
+</setup>
+</gdml>
