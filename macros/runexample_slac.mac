@@ -6,21 +6,21 @@
 /run/initialize 
 /process/optical/boundary/setInvokeSD true
 
-/qsim/filename rootfiles/qsim_out_smFull-v3_slac5gev_1.root
+/qsim/filename rootfiles/qsim_out_slactest_01.root
 /qsim/seed 50 
 
-/qsim/zmin -25 mm
-/qsim/zmax -25 mm
+/qsim/zmin -40 mm
+/qsim/zmax -40 mm
 
-#/qsim/ymin -15 mm
-#/qsim/ymax 15 mm
+/qsim/ymin 0.0 mm
+/qsim/ymax 0.0 mm
 
-#/qsim/xmin 0.0 mm
-#/qsim/xmax 0.0 mm
+/qsim/xmin 0.0 mm
+/qsim/xmax 0.0 mm
 
 /qsim/emin 5.0 GeV
 /qsim/emax 5.0 GeV
 
 /gun/particle e-
 
-/run/beamOn 5000
+/run/beamOn 100

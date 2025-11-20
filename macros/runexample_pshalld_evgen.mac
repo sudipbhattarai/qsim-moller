@@ -1,0 +1,17 @@
+# Example run macro for qsim
+
+# Set run mode
+/qsim/fSourceMode 2
+
+/run/initialize 
+/process/optical/boundary/setInvokeSD true
+
+/qsim/filename rootfiles/qsim_out_pshalld_x0_y0_test.root
+#/qsim/seed 50 
+
+/qsim/zmin -41.0 mm
+/qsim/zmax -41.0 mm
+
+/qsim/evgenfilename /Users/sudip/moller/softwares/qsim-zone/inEvDistn/pssim_02/halld_events_out_x0_y0_v02.root
+
+/run/beamOn 1000

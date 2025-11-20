@@ -1,0 +1,4 @@
+/vis/viewer/set/style surface
+/vis/viewer/set/cutawayMode intersection
+/vis/viewer/addCutawayPlane 0.0 0.0 0.0 m 0.0 -1.0 0.0
+/vis/viewer/set/cutawayMode intersection
