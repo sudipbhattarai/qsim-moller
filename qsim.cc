@@ -28,6 +28,7 @@ qsim - Quartz Detector Simluation
 #include "G4StepLimiterPhysics.hh"
 
 //to make gui.mac work
+#include <G4AutoLock.hh>
 #include <G4UImanager.hh>
 #include <G4UIExecutive.hh>
 #include "G4GDMLParser.hh"
@@ -59,6 +60,10 @@ int main(int argc, char** argv){
 	
 	G4cout << "RunManager construction starting...." << G4endl;
 	G4RunManager * runManager = new G4RunManager;
+
+    // Create a serial run manager
+    // auto runManager = G4RunManagerFactory::CreateRunManager(G4RunManagerType::Serial);
+
 	
 	qsimMessenger *rmmess = new qsimMessenger();
 	rmmess->SetIO(io);
@@ -81,7 +86,7 @@ int main(int argc, char** argv){
 	// Physics we want to use
 	G4int verbose = 4;
 	G4PhysListFactory factory;
-	G4VModularPhysicsList* physlist = factory.GetReferencePhysList("FTFP_BERT");//FTFP_BERT
+	G4VModularPhysicsList* physlist = factory.GetReferencePhysList("FTFP_BERT");//FTFP_BERT_HP
 	physlist->RegisterPhysics(new G4StepLimiterPhysics());
 	physlist->SetVerboseLevel(verbose);
 	runManager->SetUserInitialization(physlist);
@@ -155,17 +160,17 @@ int main(int argc, char** argv){
 		G4UImanager* UImanager = G4UImanager::GetUIpointer();
 		
 		// Process macro or start UI session
-		if ( ! ui ){   // batch mode  
-		G4String command = "/control/execute ";
-		G4String fileName = argv[2];
-		
-		UI->ApplyCommand(command+fileName);
-		} else{           // interactive mode
-		UImanager->ApplyCommand("/control/execute vis/vis.mac");     
-		UImanager->ApplyCommand("/control/execute macros/gui.mac");     
-		ui->SessionStart();
-		delete ui;
-		}
+        if ( ! ui ){   // batch mode  
+            G4String command = "/control/execute ";
+            G4String fileName = argv[2];
+
+            UI->ApplyCommand(command+fileName);
+        } else{           // interactive mode
+            UImanager->ApplyCommand("/control/execute vis/vis.mac");     
+            UImanager->ApplyCommand("/control/execute macros/gui.mac");     
+            ui->SessionStart();
+            delete ui;
+        }
 	}
 
 	//// Ucomment 3 lines to decide the number of the events to throw from the event generator (need more work on it) 
