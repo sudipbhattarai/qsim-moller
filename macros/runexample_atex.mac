@@ -1,0 +1,36 @@
+# Example run macro for qsim
+
+# Set source mode (0:cosmic, 1:beam, or 2:remoll)
+/qsim/fSourceMode 1 
+
+# /process/em/verbose 1
+
+# Do not remove the following two lines
+/run/initialize 
+/process/optical/boundary/setInvokeSD true
+
+# Set the output file name
+/qsim/filename rootfiles/qsim_out_atex_t6mm_xrand.root
+# /qsim/seed 50 
+
+# Set the energy range of the beam (for source mode 1)
+/qsim/emin 1 GeV
+/qsim/emax 1 GeV
+
+# Set the beam position and divergence (for source mode 0 and 1)
+/qsim/xmin -100 mm
+/qsim/xmax 100 mm
+# /qsim/ymin -130 mm
+# /qsim/ymax 130 mm
+/qsim/zmin -100 mm
+/qsim/zmax -100 mm
+# /qsim/thetamax 180 deg
+# /qsim/thetamin 180 deg
+
+# Set the beam particle type (for source mode 0:mu, 1:<as required>, 2:<n/a>)
+/gun/particle e- 
+
+# Set the input event distribution file name (for source mode 2)
+#/qsim/evgenfilename InputEventDistribution/smEvGen_moller_open_electron.root
+
+/run/beamOn 5000

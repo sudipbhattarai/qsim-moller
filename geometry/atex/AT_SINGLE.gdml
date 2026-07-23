@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "showerMaxMatrices.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/site/12gev_phys/2.4/Linux_CentOS7.9.2009-gcc9.2.0/geant4/4.10.06.p02/source/geant4.10.06.p02/source/persistency/gdml/schema/gdml.xsd">
+
+    <define>
+        <!-- User-controlled parameter -->
+        <constant name="tile_half_thickness" value="3.0"/>
+        <constant name="tile_half_length" value="100.0"/>
+        <constant name="tile_half_width" value="4.0"/>
+
+        <!-- Fixed constants -->
+        <constant name="pmt_half_radius" value="4.0"/>
+        <constant name="pmt_window_half_thickness" value="1.5"/>
+        <constant name="cath_half_thickness" value="3e-06"/>
+        <constant name="bevel_base_gap" value="0.5"/>
+        <constant name="angle" value="pi/4.0"/>
+
+        <!-- Positions -->
+        <position name="tile_posn" unit="mm" x="0" y="0" z="0" />
+        <rotation name="tile_rot" unit="deg" x="90" y="0" z="0" />
+
+        <position name="pmt_window_posn" unit="mm"
+            x="tile_half_length + tile_half_thickness + (bevel_base_gap + pmt_window_half_thickness)*cos(angle)"
+            y="0"
+            z="-(bevel_base_gap + pmt_window_half_thickness)*sin(angle)" />
+        <rotation name="pmt_window_rot" unit="deg" x="0" y="45" z="0" />
+
+        <position name="pmt_cath_posn" unit="mm"
+            x="tile_half_length + tile_half_thickness + (bevel_base_gap + pmt_window_half_thickness*2 + cath_half_thickness)*cos(angle)"
+            y="0"
+            z="-(bevel_base_gap + pmt_window_half_thickness*2 + cath_half_thickness)*sin(angle)" />
+        <rotation name="pmt_cath_rot" unit="deg" x="0" y="45" z="0" />
+            &matrices;
+    </define>
+
+    <materials>
+        <define>
+            <quantity type="density" name="universe_mean_density" value="1.e-25" unit="g/cm3" />
+        </define>
+        <element Z="8" formula="O" name="Oxygen" >
+            <atom value="16" />
+        </element>
+        <element Z="7" formula="N" name="Nitrogen" >
+            <atom value="14.01" />
+        </element>
+        <element Z="14" formula="Si" name="Silicon" >
+            <atom value="28.085" />
+        </element>
+        <element Z="51" formula="Sb" name="Antimony" >
+            <atom value="121.760" />
+        </element>
+        <element Z="55" formula="Cs" name="Caesium" >
+            <atom value="132.90545" />
+        </element>
+        <element Z="19" formula="K" name="Potassium" >
+            <atom value="39.0983" />
+        </element>
+        <material formula="noFormula" name="Air" >
+            <property name="RINDEX" ref="Air_RINDEX"/>
+            <D value="0.00129" />
+            <fraction n="0.3" ref="Oxygen" />
+            <fraction n="0.7" ref="Nitrogen" />
+        </material>
+        <material Z="1" name="vacuum" >
+            <T value="2.73" />
+            <P value=" 3.0E-18" unit="pascal" />
+            <Dref ref="universe_mean_density" />
+            <atom value="1.01" />
+        </material>
+        <material formula="SiO2" name="Quartz" >
+            <property name="RINDEX" ref="Quartz_RINDEX"/>
+            <property name="ABSLENGTH" ref="Quartz_ABSLENGTH_DATA"/>
+            <D value="2.203" />
+            <composite n="1" ref="Silicon" />
+            <composite n="2" ref="Oxygen" />
+        </material>
+        <material formula="K2CsSb" name="Cathode" >
+            <D value="3.46" />
+            <composite n="2" ref="Potassium" />
+            <composite n="1" ref="Caesium" />
+            <composite n="1" ref="Antimony" />
+        </material>
+    </materials>
+
+    <solids>
+        <box aunit="radian" lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
+        <xtru name="ThinQuartz_tile" lunit="mm">
+            <twoDimVertex x="-tile_half_length" y="tile_half_thickness"/>
+            <twoDimVertex x="-tile_half_length" y="-tile_half_thickness"/>
+            <twoDimVertex x="tile_half_length+tile_half_thickness*2" y="-tile_half_thickness"/>
+            <twoDimVertex x="tile_half_length" y="tile_half_thickness"/>
+            <section zOrder="1" zPosition="-tile_half_width" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="tile_half_width" xOffset="0" yOffset="0" scalingFactor="1"/>
+        </xtru>
+        <tube name="ThinQuartz_pmt_window" rmin="0" rmax="pmt_half_radius" z="pmt_window_half_thickness*2" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+        <tube name="ThinQuartz_cathode" rmin="0" rmax="pmt_half_radius" z="cath_half_thickness*2" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+        <opticalsurface name="quartz_surface" model="glisur" finish="ground" type="dielectric_dielectric" value="0.98" >
+        </opticalsurface>
+        <opticalsurface name="Cathode_surface" model="glisur" finish="polished" type="dielectric_metal" value="1.0">
+            <property name="REFLECTIVITY" ref="CathodeSurf_REFLECTIVITY" />
+            <property name="EFFICIENCY" ref="Cathode_EFFICIENCY" />
+        </opticalsurface>
+    </solids>
+
+    <structure>
+        <volume name="ThinQuartz_tile_vol" >
+            <materialref ref="Quartz" />
+            <solidref ref="ThinQuartz_tile" />
+        </volume>
+        <volume name="ThinQuartz_pmt_window_vol" >
+            <materialref ref="Quartz" />
+            <solidref ref="ThinQuartz_pmt_window" />
+        </volume>
+        <volume name="ThinQuartz_cathode_vol" >
+            <materialref ref="Cathode" />
+            <solidref ref="ThinQuartz_cathode" />
+            <auxiliary auxtype="SensDet" auxvalue="PhotoCathode" />
+            <auxiliary auxtype="Color" auxvalue="Yellow"/>
+        </volume>
+        <volume name="World" >
+            <materialref ref="Air" />
+            <solidref ref="WorldBox" />
+            <physvol name="ThinQuartz_tile_phys" >
+                <volumeref ref="ThinQuartz_tile_vol" />
+                <positionref ref="tile_posn" />
+                <rotationref ref="tile_rot" />
+            </physvol>
+            <physvol name="pmt_window_phys">
+                <volumeref ref="ThinQuartz_pmt_window_vol" />
+                <positionref ref="pmt_window_posn" />
+                <rotationref ref="pmt_window_rot" />
+            </physvol>
+            <physvol name="cathode_phys">
+                <volumeref ref="ThinQuartz_cathode_vol" />
+                <positionref ref="pmt_cath_posn" />
+                <rotationref ref="pmt_cath_rot" />
+            </physvol>
+        </volume>
+        <skinsurface name="quartz_skin_surface" surfaceproperty="quartz_surface" >
+            <volumeref ref="ThinQuartz_tile_vol"/>
+        </skinsurface>
+        <skinsurface name="cathode_skin_surface" surfaceproperty="Cathode_surface" >
+            <volumeref ref="ThinQuartz_cathode_vol"/>
+        </skinsurface>
+    </structure>
+
+    <setup name="Default" version="1.0" >
+        <world ref="World" />
+    </setup>
+</gdml>
