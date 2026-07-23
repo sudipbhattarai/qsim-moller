@@ -191,6 +191,15 @@ void qsimMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 		fprigen->fthetaMax = x;
     }
 
+    if( cmd == fphiMinCmd ){
+		G4double x = fphiMinCmd->GetNewDoubleValue(newValue);
+		fprigen->fphiMin = x;
+    }
+
+    if( cmd == fphiMaxCmd ){
+		G4double x = fphiMaxCmd->GetNewDoubleValue(newValue);
+		fprigen->fphiMax = x;
+    }
 	// INSERT new commands for theta
 
 	//    if( cmd == fThetaCmd ){

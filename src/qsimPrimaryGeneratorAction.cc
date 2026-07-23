@@ -73,6 +73,9 @@ void qsimPrimaryGeneratorAction::SourceModeSet(G4int mode = 0) {
 		fthetaMin = 0*deg;
 		fthetaMax = 0*deg;
 
+		fphiMin = 0*deg;
+		fphiMax = 0*deg;
+
 	} else if (fSourceMode==2){
 		fEmin = 2.0*GeV; 
 		fEmax = 8.0*GeV; 
@@ -153,15 +156,17 @@ void qsimPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 			if (fSourceMode==1){
 				randTheta = CLHEP::RandFlat::shoot( fthetaMin, fthetaMax );
 				goodTheta = Thetaspectrum(randTheta);
+                randPhi = CLHEP::RandFlat::shoot( fphiMin, fphiMax );
 			}
 			else if (fSourceMode==0){ //cosmic mode
 				randTheta = CLHEP::RandGauss::shoot(0.0, 40/degree);
 				if (randTheta <=fthetaMax && randTheta >= fthetaMin) goodTheta = true;
 				else goodTheta = false;
+                randPhi = CLHEP::RandFlat::shoot( fphiMin, fphiMax );
 			}
 		}
 		
-		randPhi = CLHEP::RandFlat::shoot( 0.0, 360.0)*deg ;
+		// randPhi = CLHEP::RandFlat::shoot( 0.0, 360.0)*deg ;
 		
 		pX = sin(randTheta)*cos(randPhi)*p;
 		pY = sin(randTheta)*sin(randPhi)*p;
